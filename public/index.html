@@ -1,0 +1,32 @@
+<html>
+
+<head>
+    <title>Express</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+
+<body>
+<h1>Express</h1>
+<p id="time">Time Data</p>
+<p id="weight">Weight Data</p>
+
+<script src="javascripts/jquery/jquery.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var socket = io();
+        socket.on('time', setTime);
+        socket.on('weight', setWeight);
+    });
+
+    function setTime(time) {
+        $('#time').text(time);
+    }
+
+    function setWeight(weight) {
+        $('#weight').text(weight);
+    }
+</script>
+</body>
+
+</html>
