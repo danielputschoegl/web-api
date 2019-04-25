@@ -1,10 +1,10 @@
 var mysql = require('mysql');
 
 global.connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'root',
-    database: 'smartlorry'
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE
 });
 
 connection.connect(function (err) {
@@ -15,7 +15,9 @@ connection.connect(function (err) {
     }
 });
 
-require('../entity/Product');
-require('../entity/Component');
-require('../entity/ProcessStep');
-require('../entity/Record');
+require('../entities/Product');
+require('../entities/Component');
+require('../entities/ProductComponent');
+require('../entities/Orders');
+require('../entities/OrderScans');
+require('../entities/Record');

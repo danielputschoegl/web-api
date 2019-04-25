@@ -3,8 +3,11 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+var dotenv = require('dotenv');
+dotenv.config();
+
 // Functions
-// require('./db/db-connection');
+require('./db/db-connection');
 require('./functions/data-action');
 
 

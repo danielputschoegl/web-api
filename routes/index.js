@@ -17,7 +17,7 @@ router.post('/time', function (req, res, next) {
 });
 
 router.post('/weight', function (req, res, next) {
-    eventHandler.publish('weight', req.body.weight);
+    eventHandler.publish('weight', req.body);
 
     res.json({
         status: 200,
