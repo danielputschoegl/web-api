@@ -5,10 +5,10 @@ eventHandler.subscribe('weight', function (data) {
     // repository.create('record', {
     //     weight: data.weight,
     //     order_id: data.order,
-    //     product_component_id: getComponent
+    //     product_component_id: getComponent(data)
     // });
 
-    io.emit('weight', data);
+    io.emit('weight', data.weight);
 });
 
 function getComponent(data) {
@@ -37,5 +37,7 @@ function getComponent(data) {
         order_id: data.order
     }, [
         ' weight BETWEEN ' + lower + ' AND ' + upper
-    ]);
+    ], function(result) {
+
+    });
 }

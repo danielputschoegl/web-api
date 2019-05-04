@@ -2,7 +2,7 @@
 
 <head>
     <title>Express</title>
-    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="stylesheets/style.css">
 </head>
 
 <body>
@@ -10,8 +10,11 @@
 <p id="time">Time Data</p>
 <p id="weight">Weight Data</p>
 
+<div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
+
 <script src="javascripts/jquery/jquery.js"></script>
 <script src="/socket.io/socket.io.js"></script>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         var socket = io();
@@ -26,6 +29,7 @@
     function setWeight(weight) {
         $('#weight').text(weight);
     }
+
 </script>
 </body>
 

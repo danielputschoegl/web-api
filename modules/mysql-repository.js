@@ -1,16 +1,17 @@
+// connection.query returnt Promises, ist also async, deshalb callbacks
 var repository = (function () {
     return {
-        getAll: function (table) {
-            return connection.query('SELECT * FROM ' + table, function (err, result, fields) {
+        getAll: function (table, callback) {
+            connection.query('SELECT * FROM ' + table, function (err, result, fields) {
                 if (err) {
                     throw err;
                 }
 
-                return result;
+                repositoryCallback(result, callback);
             });
         },
-        getById: function table(table, id) {
-            return connection.query('SELECT * FROM ' + table + ' WHERE id = ' + id, function (err, result, fields) {
+        getById: function table(table, id, callback) {
+            connection.query('SELECT * FROM ' + table + ' WHERE id = ' + id, function (err, result, fields) {
                 if (err) {
                     if (err.code === 'ER_BAD_FIELD_ERROR') {
                         // Falls PK nicht 'id' dann soll hier der richtige PK herausgefunden werden
@@ -22,30 +23,28 @@ var repository = (function () {
                             '  AND t.table_schema=\'' + process.env.DB_DATABASE + '\'' +
                             '  AND t.table_name=\'orders\'';
 
-                        var pk = connection.query(sql, function (err, result, fields) {
+                        connection.query(sql, function (err, result, fields) {
                             if (err) {
                                 throw err;
                             }
 
-                            return result[0].column_name;
-                        });
+                            connection.query('SELECT * FROM ' + table + ' WHERE ' + result[0].column_name + '=' + id, function (err, result) {
+                                if (err) {
+                                    throw err;
+                                }
 
-                        return connection.query('SELECT * FROM ' + table + ' WHERE ' + pk + '=' + id, function (err, result, fields) {
-                            if (err) {
-                                throw err;
-                            }
-
-                            return result;
+                                repositoryCallback(result, callback);
+                            });
                         });
                     } else {
                         throw err;
                     }
                 }
 
-                return result;
+                repositoryCallback(result, callback);
             });
         },
-        getBy: function (table, where, customWhere) {
+        getBy: function (table, where, customWhere, callback) {
             var sql = 'SELECT * FROM ' + table + ' WHERE ';
 
             for (var key in where) {
@@ -60,14 +59,15 @@ var repository = (function () {
 
             sql = sql.slice(0, -4);
 
-
-            return connection.query(sql, function (err, result, fields) {
+            connection.query(sql, function (err, result) {
                 if (err) {
                     throw err;
                 }
+
+                repositoryCallback(result, callback);
             });
         },
-        create: function (table, insert) {
+        create: function (table, insert, callback) {
             var sql = 'INSERT INTO ' + table + '(';
 
             var keys = '';
@@ -79,13 +79,15 @@ var repository = (function () {
 
             sql += keys.slice(0, -1) + ') VALUES (' + vals.slice(0, -1) + ')';
 
-            return connection.query(sql, function (err, result, fields) {
+            connection.query(sql, function (err, result) {
                 if (err) {
                     throw err;
                 }
+
+                repositoryCallback(result, callback);
             });
         },
-        update: function (table, set, where) {
+        update: function (table, set, where, callback) {
             var sql = 'UPDATE ' + table + ' SET ';
 
             for (var key in set) {
@@ -103,13 +105,15 @@ var repository = (function () {
 
             sql = sql.slice(0, -4);
 
-            return connection.query(sql, function (err, result, fields) {
+            connection.query(sql, function (err, result) {
                 if (err) {
                     throw err;
                 }
+
+                repositoryCallback(result, callback);
             });
         },
-        delete: function (table, where) {
+        delete: function (table, where, callback) {
             var sql = 'DELETE FROM ' + table + ' WHERE ';
 
             for (var key in where) {
@@ -119,13 +123,25 @@ var repository = (function () {
 
             sql = sql.slice(0, -4);
 
-            return connection.query(sql, function (err, result, fields) {
+            connection.query(sql, function (err, result) {
                 if (err) {
                     throw err;
                 }
+
+                repositoryCallback(result, callback);
             });
         }
-    }
+    };
 })();
+
+function repositoryCallback(result, callback) {
+    if (Object.keys(result).length === 0) {
+        result = null;
+    }
+
+    if (callback) {
+        callback(result);
+    }
+}
 
 module.exports = repository;

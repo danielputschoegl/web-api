@@ -8,6 +8,7 @@ dotenv.config();
 
 // Functions
 require('./db/db-connection');
+require('./db/fixtures');
 require('./functions/data-action');
 
 
