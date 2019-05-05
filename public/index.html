@@ -6,30 +6,60 @@
 </head>
 
 <body>
-<h1>Express</h1>
-<p id="time">Time Data</p>
-<p id="weight">Weight Data</p>
 
-<div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
+<div style="width: 80vw; height: 80vh; margin:0 auto;">
+    <canvas id="line-chart"></canvas>
+</div>
 
 <script src="javascripts/jquery/jquery.js"></script>
 <script src="/socket.io/socket.io.js"></script>
-<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script src="/scripts/Chart.min.js"></script>
 <script type="text/javascript">
-    $(document).ready(function () {
-        var socket = io();
-        socket.on('time', setTime);
-        socket.on('weight', setWeight);
-    });
 
-    function setTime(time) {
-        $('#time').text(time);
-    }
+    var canvas = $('#line-chart');
+    var ctx = canvas[0].getContext('2d');
+    var startingData = {
+        type: 'line',
+        data: {
+            datasets: [{
+                labels: new Date().toTimeString().split(' ')[0],
+                data: [0],
+                label: "Weight",
+                borderColor: "#3e95cd",
+                fill: false
+            }]
+        },
+        options: {
+            elements: {
+                line: {
+                    tension: 0
+                }
+            }
+        }
+    };
+
+    var chart = new Chart(ctx, startingData);
 
     function setWeight(weight) {
-        $('#weight').text(weight);
+        chart.data.labels.push(new Date().toTimeString().split(' ')[0]);
+        chart.data.datasets.forEach(function (dataset) {
+            dataset.data.push(weight);
+        });
+
+        if (chart.data.labels.length > 10) {
+            chart.data.labels.shift();
+            chart.data.datasets.forEach(function (dataset) {
+                dataset.data.shift();
+            });
+        }
+
+        chart.update();
     }
 
+    $(document).ready(function () {
+        var socket = io();
+        socket.on('weight', setWeight);
+    });
 </script>
 </body>
 

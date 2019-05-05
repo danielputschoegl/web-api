@@ -2,16 +2,18 @@ var eventHandler = require('../modules/event-handler');
 var repository = require('../modules/mysql-repository');
 
 eventHandler.subscribe('weight', function (data) {
-    // repository.create('record', {
-    //     weight: data.weight,
-    //     order_id: data.order,
-    //     product_component_id: getComponent(data)
+    // saveToDatabase(data, function (product_component_id) {
+    //     repository.create('record', {
+    //         weight: data.weight,
+    //         order_id: data.order,
+    //         product_component_id: product_component_id
+    //     });
     // });
 
     io.emit('weight', data.weight);
 });
 
-function getComponent(data) {
+function saveToDatabase(data, callback) {
     var lower = 0;
     var upper = 0;
 
@@ -33,11 +35,17 @@ function getComponent(data) {
             break;
     }
 
-    return repository.getBy('order_scan', {
+    repository.getBy('order_scan', {
         order_id: data.order
     }, [
         ' weight BETWEEN ' + lower + ' AND ' + upper
-    ], function(result) {
+    ], function (result) {
+        repository.getBy('product_component', {
 
+        },{}, function () {
+
+
+            callback(result);
+        });
     });
 }
