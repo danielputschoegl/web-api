@@ -2,15 +2,10 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+require('./models');
 
 var dotenv = require('dotenv');
 dotenv.config();
-
-// Functions
-require('./db/db-connection');
-require('./db/fixtures');
-require('./functions/data-action');
-
 
 var app = express();
 app.use(logger('dev'));

@@ -1,0 +1,9 @@
+# ignore log file
+*.log
+
+# ignore node modules
+node_modules
+package-lock.json
+
+# ignore migrations
+migrations

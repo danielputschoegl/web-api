@@ -1,5 +1,5 @@
 var eventHandler = require('../modules/event-handler');
-var repository = require('../modules/mysql-repository');
+var repository = require('../modules/mysql-repository-plain-sql');
 
 eventHandler.subscribe('weight', function (data) {
     // saveToDatabase(data, function (product_component_id) {
