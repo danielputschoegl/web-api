@@ -15,8 +15,20 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/scripts', express.static(__dirname + '/node_modules/chart.js/dist/'));
 
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'twig');
+
+// This section is optional and used to configure twig.
+app.set("twig options", {
+    allow_async: true, // Allow asynchronous compiling
+    strict_variables: false
+});
+
 // Routing
 var indexRouter = require('./routes/index');
+var adminRouter = require('./routes/admin');
 app.use('/', indexRouter);
+app.use('/admin', adminRouter);
 
 module.exports = app;
