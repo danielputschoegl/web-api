@@ -1,13 +1,16 @@
 var express = require('express');
 var router = express.Router();
-var eventHandler = require('../modules/event-handler');
 
-/* GET home page. */
 router.get('/', function (req, res, next) {
     res.render('admin/index', {
         message: "Hello World"
     });
-    // res.render('index', {title: 'Express'});
+});
+
+router.get('/lorry', function (req, res, next) {
+    res.render('admin/logistics', {
+        message: "Hello World"
+    });
 });
 
 module.exports = router;
