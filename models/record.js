@@ -7,8 +7,7 @@ module.exports = (sequelize, DataTypes) => {
         }
   }, {});
   Record.associate = function(models) {
-    Record.belongsTo(models.Order);
-    Record.belongsTo(models.ProductComponent);
+    Record.belongsTo(models.Lorry);
   };
   return Record;
 };
