@@ -4,79 +4,73 @@
 {% set active = 'Logistics' %}
 {% block content %}
 
-    <h1 id="barcode"></h1>
-    Enter/Scan Barcode : <input type="text" id="txtCode" class="barcodeinput"/>
-    <input type="button" value="OK" class="nextcontrol"/>
-    <h3 id="msg"/>
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">0 Elemente am Kommissionierwagen</h6>
+        </div>
+        <div class="card-body">
+            <p>Hier werden alle Elemente aufgelistet, welche sich auf dem Kommissionierwagen befinden.</p>
+        </div>
+    </div>
+
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Barcode scannen/eingeben</h6>
+        </div>
+        <div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <input type="text" id="barcode"/>
+                        <button class="btn btn-primary" id="addItem">OK</button>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <p id="actualPart"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" id="errorBox">
+        <div class="col-lg-12 mb-4">
+            <div class="card bg-danger text-white shadow">
+                <div class="card-body" id="error">
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <script type="text/javascript">
+        $('#errorBox').hide();
         $(document).ready(function () {
 
-            var keyupFiredCount = 0;
+            $('#addItem').on('click', function () {
+                var barcode = $('#barcode').val();
 
-            function DelayExecution(f, delay) {
-                var timer = null;
-                return function () {
-                    var context = this, args = arguments;
+                if (barcode.length != 9) {
+                    $('#error').html('Fehler! Barcode muss genau 9 Zeichen lang sein...');
+                    $('#errorBox').show();
+                    return;
+                }
 
-                    clearTimeout(timer);
-                    timer = window.setTimeout(function () {
-                            f.apply(context, args);
-                        },
-                        delay || 300);
-                };
-            }
-
-            $.fn.ConvertToBarcodeTextbox = function () {
-
-                $(this).focus(function () {
-                    $(this).select();
-                    $("#msg").html("");
-                });
-
-                $(this).keydown(function (event) {
-                    var keycode = (event.keyCode ? event.keyCode : event.which);
-
-                    if ($(this).val() == '') {
-                        keyupFiredCount = 0;
-                    }
-                    if (keycode == 13) {//enter key
-                        $(".nextcontrol").focus();
-                        return false;
-                        event.stopPropagation();
+                $.ajax({
+                    type: 'POST',
+                    data: {"barcode": barcode},
+                    url: 'http://localhost:3000/admin/lorry/add',
+                    success: function (data) {
+                        $('#actualPart').text(JSON.stringify(data));
+                    },
+                    error: function (data) {
+                        alert('nothing found');
                     }
                 });
-
-                $(this).keyup(DelayExecution(function (event) {
-                    var keycode = (event.keyCode ? event.keyCode : event.which);
-                    keyupFiredCount = keyupFiredCount + 1;
-                }));
-
-                $(this).blur(function (event) {
-                    if ($(this).val() == '')
-                        return false;
-
-                    if (keyupFiredCount <= 1) {
-                        $("#msg").html("<span style='color:green'>Its Scanner!</span>");
-                        //alert('Its Scanner');
-                    } else {
-                        $("#msg").html("<span style='color:red'>Its Manually Typed!</span>");
-                        //alert('Its Manual Entry');
-                    }
-
-                    keyupFiredCount = 0;
-                });
-            };
-            try {
-                $(".barcodeinput").ConvertToBarcodeTextbox();
-                if ($(".barcodeinput").val() == '')
-                    $(".barcodeinput").focus();
-                else
-                    $(".nextcontrol").focus();
-            } catch (e) {
-            }
-
+            });
         });
     </script>
 {% endblock %}

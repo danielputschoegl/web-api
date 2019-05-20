@@ -1,0 +1,30 @@
+{% extends 'base/layout.twig' %}
+
+{% set heading = 'Teile' %}
+{% set active = 'Parts' %}
+{% block content %}
+
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Gewicht</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for part in parts %}
+                    <tr>
+                        <td>{{ part.part_id }}</td>
+                        <td>{{ part.name }}</td>
+                        <td>{{ part.system_weight }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}

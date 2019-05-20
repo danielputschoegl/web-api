@@ -10,7 +10,7 @@ const db = {};
 
 let sequelize = new Sequelize(config.database, config.username, config.password, config);
 
-sequelize.sync({ force: true })
+sequelize.sync({ force: false })
   .then(() => {
     console.log(`Database & tables created!`)
   });

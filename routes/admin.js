@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-
+var models = require('../models');
 
 router.get('/', function (req, res, next) {
     res.render('admin/index', {
@@ -9,8 +9,42 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/lorry', function (req, res, next) {
-    res.render('admin/logistics', {
-        message: "Hello World"
+    res.render('admin/logistics', {});
+});
+
+router.post('/lorry/add', function (req, res, next) {
+    var barcode = req.body.barcode;
+
+    models.Part.findByPk(barcode).then(function (part) {
+        if (!part) {
+            res.status(400).json('failed');
+        }
+
+        res.status(200).json(part.dataValues);
+    });
+});
+
+router.get('/parts', function (req, res, next) {
+    var parts = models.Part.findAll({});
+
+    res.render('admin/parts', {
+        parts: parts
+    });
+});
+
+router.get('/cbricks', function (req, res, next) {
+    var cbricks = models.cBrick.findAll({});
+
+    res.render('admin/cbricks', {
+        cbricks: cbricks
+    });
+});
+
+router.get('/processes', function (req, res, next) {
+    var processes = models.Process.findAll({});
+
+    res.render('admin/processes', {
+        processes: processes
     });
 });
 

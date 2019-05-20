@@ -2,9 +2,9 @@
 module.exports = (sequelize, DataTypes) => {
     const cBrick = sequelize.define('cBrick', {
         cBrick_id: {
-            type: DataTypes.BIGINT(11),
+            type: DataTypes.BIGINT(10),
             allowNull: false,
-            unique: true
+            primaryKey: true
         },
         actual_time: {
             type: DataTypes.FLOAT, // in seconds
@@ -16,8 +16,8 @@ module.exports = (sequelize, DataTypes) => {
         },
     }, {});
     cBrick.associate = function (models) {
-        cBrick.belongsToMany(models.Process, {through: 'ProcessCBrick'});
-        cBrick.hasMany(models.Part);
+        cBrick.belongsToMany(models.Process, {through: 'Process_CBrick'});
+        cBrick.belongsToMany(models.Part, {through: 'CBrick_Part'});
     };
     return cBrick;
 };

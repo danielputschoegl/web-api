@@ -1,0 +1,30 @@
+{% extends 'base/layout.twig' %}
+
+{% set heading = 'CBrick' %}
+{% set active = 'CBricks' %}
+
+{% block content %}
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>SOLL-Zeit</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for cbrick in cbricks %}
+                    <tr>
+                        <td>{{ cbrick.cBrick_id }}</td>
+                        <td>{{ cbrick.name }}</td>
+                        <td>{{ cbrick.actual_time }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}

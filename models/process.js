@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
         process_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            unique: true
+            primaryKey: true
         },
         is_milestone: {
             type: DataTypes.BOOLEAN,
@@ -16,8 +16,8 @@ module.exports = (sequelize, DataTypes) => {
         }
     }, {});
     Process.associate = function (models) {
-        Process.belongsToMany(models.Order, {through: 'OrderProcess'});
-        Process.hasMany(models.cBrick);
+        Process.belongsToMany(models.Order, {through: 'Order_Process'});
+        Process.belongsToMany(models.cBrick, {through: 'Process_CBrick'});
     };
     return Process;
 };

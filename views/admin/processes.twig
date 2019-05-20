@@ -1,0 +1,36 @@
+{% extends 'base/layout.twig' %}
+
+{% set heading = 'Prozesse' %}
+{% set active = 'Processes' %}
+{% block content %}
+
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Meilenstein</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for process in processes %}
+                    <tr>
+                        <td>{{ process.process_id }}</td>
+                        <td>{{ process.name }}</td>
+                        <td class="text-center">
+                            {% if process.is_milestone %}
+                                <i class="far fa-check-square"></i>
+                            {% else %}
+                                <i class="far fa-square"></i>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}

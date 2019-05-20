@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
         }
     }, {});
     Order.associate = function (models) {
-        Order.belongsToMany(models.Process, {through: 'ProcessOrder'});
+        Order.belongsToMany(models.Process, {through: 'Process_Order'});
         Order.hasOne(models.Lorry);
     };
     return Order;

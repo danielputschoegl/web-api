@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
         part_id: {
             type: DataTypes.BIGINT(10),
             allowNull: false,
-            unique: true
+            primaryKey: true
         },
         system_weigth: {
             type: DataTypes.FLOAT,
@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
         }
     }, {});
     Part.associate = function (models) {
-        Part.belongsToMany(models.cBrick, {through: 'CBrickPart'});
+        Part.belongsToMany(models.cBrick, {through: 'CBrick_Part'});
         Part.hasOne(models.OrderScan);
     };
     return Part;

@@ -30,14 +30,31 @@
         Logistik
     </div>
 
-    <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item {{  active == 'Logistics' ? 'active' : ''}}">
         <a class="nav-link" href="/admin/lorry">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Kommissionierwagen</span></a>
     </li>
 
-    <!-- Divider -->
+    <li class="nav-item {{  active == 'Parts' ? 'active' : ''}}">
+        <a class="nav-link" href="/admin/parts">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Teile</span></a>
+    </li>
+
+    <li class="nav-item {{  active == 'CBricks' ? 'active' : ''}}">
+        <a class="nav-link" href="/admin/cbricks">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>CBricks</span></a>
+    </li>
+
+    <li class="nav-item {{  active == 'Processes' ? 'active' : ''}}">
+        <a class="nav-link" href="/admin/processes">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Prozesse</span></a>
+    </li>
+
+    {#<!-- Divider -->
     <hr class="sidebar-divider">
 
     <!-- Heading -->
@@ -81,7 +98,7 @@
     </li>
 
     <!-- Divider -->
-    <hr class="sidebar-divider d-none d-md-block">
+    <hr class="sidebar-divider d-none d-md-block">#}
 
     <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline">
