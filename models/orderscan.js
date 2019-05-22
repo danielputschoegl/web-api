@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
     const OrderScan = sequelize.define('OrderScan', {
         weigth: {
             type: DataTypes.FLOAT,
-            allowNull: false,
+            allowNull: true,
         },
     }, {});
     OrderScan.associate = function (models) {

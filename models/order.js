@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
         order_nr: {
             type: DataTypes.STRING,
             allowNull: false,
-            unique: true
+            primaryKey: true
         },
         name: {
             type: DataTypes.STRING,
@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         weigth: {
             type: DataTypes.FLOAT,
-            allowNull: false,
+            allowNull: true,
         }
     }, {});
     Order.associate = function (models) {

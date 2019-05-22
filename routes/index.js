@@ -4,7 +4,7 @@ var eventHandler = require('../modules/event-handler');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-    res.render('index', {title: 'Express'});
+    res.redirect('/admin');
 });
 
 router.post('/time', function (req, res, next) {

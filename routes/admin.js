@@ -8,22 +8,6 @@ router.get('/', function (req, res, next) {
     });
 });
 
-router.get('/lorry', function (req, res, next) {
-    res.render('admin/logistics', {});
-});
-
-router.post('/lorry/add', function (req, res, next) {
-    var barcode = req.body.barcode;
-
-    models.Part.findByPk(barcode).then(function (part) {
-        if (!part) {
-            res.status(400).json('failed');
-        }
-
-        res.status(200).json(part.dataValues);
-    });
-});
-
 router.get('/parts', function (req, res, next) {
     var parts = models.Part.findAll({});
 

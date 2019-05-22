@@ -6,27 +6,100 @@
 
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">0 Elemente am Kommissionierwagen</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Aktuell</h6>
         </div>
         <div class="card-body">
-            <p>Hier werden alle Elemente aufgelistet, welche sich auf dem Kommissionierwagen befinden.</p>
+            <div class="row">
+                {% if lorryId is not null %}
+                    <div class="col-md-6">
+                        <div class="card bg-primary text-white shadow">
+                            <div class="card-body">
+                                Kommissionierwagen: <strong>{{ lorryId }}</strong>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="col-md-6">
+                        <div class="card bg-danger text-white shadow">
+                            <div class="card-body">
+                                Kein Kommissionierwagen ausgewählt.
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+                {% if orderId is not null %}
+                    <div class="col-md-6">
+                        <div class="card bg-primary text-white shadow">
+                            <div class="card-body">
+                                Bestellung: <strong>{{ orderId }}</strong>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="col-md-6">
+                        <div class="card bg-danger text-white shadow">
+                            <div class="card-body">
+                                Keine Bestellung ausgewählt.
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
         </div>
     </div>
 
-
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Barcode scannen/eingeben</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Auftrag erfassen</h6>
         </div>
         <div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col">
-                        <input type="text" id="barcode"/>
-                        <button class="btn btn-primary" id="addItem">OK</button>
+                    <div class="col-md-4">
+                        Barcode scannen/eingeben
+                    </div>
+                    <div class="col-md-8">
+                        <input type="text" value="O111111"
+                               id="order_barcode" {% if orderId is not null %} disabled {% endif %}/>
+                        <div class="btn-group">
+                            <button class="btn btn-primary" id="addOrder">OK</button>
+                            {% if orderId is not null %}
+                                <button class="btn btn-primary" id="removeOrder"><i
+                                            class="far fa-trash-alt text-white"></i></button>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col">
+                        <p id="actualOrder"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Teil hinzufügen</h6>
+        </div>
+        <div>
+            <div class="card-body">
+                {% if lorryId is not null %}
+                    <div class="row">
+                        <div class="col-md-4">
+                            Barcode scannen/eingeben
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" value="100594406" id="part_barcode"/>
+                            <button class="btn btn-primary" id="addPart">OK</button>
+                        </div>
+                    </div>
+
+                    <div id="orderScans" class="mt-2"></div>
+                {% else %}
+                    <span class="text-danger">Es ist kein Auftrag hinterlegt.</span>
+                {% endif %}
                 <div class="row">
                     <div class="col">
                         <p id="actualPart"></p>
@@ -35,6 +108,7 @@
             </div>
         </div>
     </div>
+
 
     <div class="row" id="errorBox">
         <div class="col-lg-12 mb-4">
@@ -50,8 +124,8 @@
         $('#errorBox').hide();
         $(document).ready(function () {
 
-            $('#addItem').on('click', function () {
-                var barcode = $('#barcode').val();
+            $('#addPart').on('click', function () {
+                var barcode = $('#part_barcode').val();
 
                 if (barcode.length != 9) {
                     $('#error').html('Fehler! Barcode muss genau 9 Zeichen lang sein...');
@@ -62,15 +136,54 @@
                 $.ajax({
                     type: 'POST',
                     data: {"barcode": barcode},
-                    url: 'http://localhost:3000/admin/lorry/add',
+                    url: 'http://localhost:3000/admin/lorry/add/part',
                     success: function (data) {
-                        $('#actualPart').text(JSON.stringify(data));
+                        // $('#actualPart').text(JSON.stringify(data));
+                        reloadOrderScans();
                     },
                     error: function (data) {
                         alert('nothing found');
                     }
                 });
             });
+
+            $('#addOrder').on('click', function () {
+                var barcode = $('#order_barcode').val();
+
+                if (barcode.length != 7) {
+                    $('#error').html('Fehler! Barcode muss genau 7 Zeichen lang sein...');
+                    $('#errorBox').show();
+                    return;
+                }
+
+                $.ajax({
+                    type: 'POST',
+                    data: {"barcode": barcode},
+                    url: 'http://localhost:3000/admin/lorry/add/order',
+                    success: function (data) {
+                        $('#actualOrder').text(JSON.stringify(data));
+                        location.reload();
+                        reloadOrderScans();
+                    },
+                    error: function (data) {
+                        alert('nothing found');
+                    }
+                });
+            });
+
+            $('#removeOrder').on('click', function () {
+                $.get('http://localhost:3000/admin/lorry/clear/session', function (data) {
+                    location.reload();
+                })
+            });
+
+            reloadOrderScans();
+
+            function reloadOrderScans() {
+                $.get('http://localhost:3000/admin/lorry/get/parts', function (data) {
+                    $('#orderScans').html(data);
+                })
+            }
         });
     </script>
 {% endblock %}

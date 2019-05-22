@@ -303,6 +303,32 @@ module.exports = {
             {ProcessProcessId: 19, cBrickCbrickId: 100001096, createdAt: new Date(), updatedAt: new Date()}
         ], {});
 
+        await queryInterface.bulkInsert('orders', [
+            {order_nr: 'O111111', name: 'Test Order 1', createdAt: new Date(), updatedAt: new Date()},
+            {order_nr: 'O222222', name: 'Test Order 2', createdAt: new Date(), updatedAt: new Date()},
+            {order_nr: 'O333333', name: 'Test Order 3', createdAt: new Date(), updatedAt: new Date()},
+            {order_nr: 'O444444', name: 'Test Order 4', createdAt: new Date(), updatedAt: new Date()}
+        ], {});
+
+        await queryInterface.bulkInsert('process_order', [
+            {OrderOrderNr: 'O111111', ProcessProcessId: '16', createdAt: new Date(), updatedAt: new Date()},
+            {OrderOrderNr: 'O111111', ProcessProcessId: '17', createdAt: new Date(), updatedAt: new Date()},
+            {OrderOrderNr: 'O111111', ProcessProcessId: '18', createdAt: new Date(), updatedAt: new Date()},
+            {OrderOrderNr: 'O111111', ProcessProcessId: '19', createdAt: new Date(), updatedAt: new Date()},
+            {OrderOrderNr: 'O222222', ProcessProcessId: '16', createdAt: new Date(), updatedAt: new Date()},
+            {OrderOrderNr: 'O222222', ProcessProcessId: '17', createdAt: new Date(), updatedAt: new Date()},
+            {OrderOrderNr: 'O222222', ProcessProcessId: '18', createdAt: new Date(), updatedAt: new Date()},
+            {OrderOrderNr: 'O222222', ProcessProcessId: '19', createdAt: new Date(), updatedAt: new Date()},
+            {OrderOrderNr: 'O333333', ProcessProcessId: '16', createdAt: new Date(), updatedAt: new Date()},
+            {OrderOrderNr: 'O333333', ProcessProcessId: '17', createdAt: new Date(), updatedAt: new Date()},
+            {OrderOrderNr: 'O333333', ProcessProcessId: '18', createdAt: new Date(), updatedAt: new Date()},
+            {OrderOrderNr: 'O333333', ProcessProcessId: '19', createdAt: new Date(), updatedAt: new Date()},
+            {OrderOrderNr: 'O444444', ProcessProcessId: '16', createdAt: new Date(), updatedAt: new Date()},
+            {OrderOrderNr: 'O444444', ProcessProcessId: '17', createdAt: new Date(), updatedAt: new Date()},
+            {OrderOrderNr: 'O444444', ProcessProcessId: '18', createdAt: new Date(), updatedAt: new Date()},
+            {OrderOrderNr: 'O444444', ProcessProcessId: '19', createdAt: new Date(), updatedAt: new Date()}
+        ], {});
+
         return queryInterface.bulkInsert('cBrick_Part', [
                 {PartPartId: 100030026, cBrickcBrickId: 100000943, createdAt: new Date(), updatedAt: new Date()},
                 {PartPartId: 100054200, cBrickcBrickId: 100000943, createdAt: new Date(), updatedAt: new Date()},

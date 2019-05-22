@@ -1,0 +1,24 @@
+{% if orderScans|length > 0 %}
+    <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <thead>
+            <tr>
+                <th>Part ID</th>
+                <th>Bezeichnung</th>
+                <th>Gewicht</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for scan in orderScans %}
+                <tr>
+                    <td>{{ scan.PartPartId }}</td>
+                    <td>{{ scan.part.name }}</td>
+                    <td>{{ scan.weight }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% else %}
+    <span class="font-italic">Es sind noch keine Teile am Kommissionierwagen hinterlegt!</span>
+{% endif %}

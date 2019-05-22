@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
     const Lorry = sequelize.define('Lorry', {
         weigth: {
             type: DataTypes.FLOAT,
-            allowNull: false,
+            allowNull: true,
         },
     }, {});
     Lorry.associate = function (models) {

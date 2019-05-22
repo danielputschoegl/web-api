@@ -10,6 +10,7 @@ const db = {};
 
 let sequelize = new Sequelize(config.database, config.username, config.password, config);
 
+// set force to false, if you don't want to drop all tables
 sequelize.sync({ force: false })
   .then(() => {
     console.log(`Database & tables created!`)
