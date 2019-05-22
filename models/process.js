@@ -1,7 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
     const Process = sequelize.define('Process', {
-        process_id: {
+        id: {
             type: DataTypes.INTEGER,
             allowNull: false,
             primaryKey: true
@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
     }, {});
     Process.associate = function (models) {
         Process.belongsToMany(models.Order, {through: 'Order_Process'});
-        Process.belongsToMany(models.cBrick, {through: 'Process_CBrick'});
+        Process.belongsToMany(models.cBrick, {through: 'Process_cBrick'});
     };
     return Process;
 };

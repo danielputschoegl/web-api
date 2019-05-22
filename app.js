@@ -9,6 +9,10 @@ require('./models');
 var dotenv = require('dotenv');
 dotenv.config();
 
+// Functions
+require('./functions/data-cleaner');
+require('./functions/data-action');
+
 var app = express();
 app.use(logger('dev'));
 app.use(express.json());

@@ -1,7 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
     const Order = sequelize.define('Order', {
-        order_nr: {
+        nr: {
             type: DataTypes.STRING,
             allowNull: false,
             primaryKey: true
@@ -10,11 +10,12 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        weigth: {
+        weight: {
             type: DataTypes.FLOAT,
             allowNull: true,
         }
     }, {});
+
     Order.associate = function (models) {
         Order.belongsToMany(models.Process, {through: 'Process_Order'});
         Order.hasOne(models.Lorry);

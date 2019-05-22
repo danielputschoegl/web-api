@@ -1,7 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
     const OrderScan = sequelize.define('OrderScan', {
-        weigth: {
+        weight: {
             type: DataTypes.FLOAT,
             allowNull: true,
         },

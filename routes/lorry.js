@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var models = require('../models');
+var eventHandler = require('../modules/event-handler');
 
 router.get('/', function (req, res, next) {
     var orderId = null;
@@ -70,14 +71,23 @@ router.post('/add/order', function (req, res, next) {
 
         models.Lorry.findOrCreate({
             where: {
-                OrderOrderNr: order.order_nr
+                order_nr: order.nr
             },
         }).then(([lorry, created]) => {
             req.session.actualLorry = lorry.id;
             res.status(200).json(order.dataValues);
         });
 
-        req.session.actualOrder = order.order_nr;
+        req.session.actualOrder = order.nr;
+    });
+});
+
+router.post('/weight', function (req, res, next) {
+    eventHandler.publish('weight', req.body);
+
+    res.json({
+        status: 200,
+        success: 'Weight delivered successfully!'
     });
 });
 

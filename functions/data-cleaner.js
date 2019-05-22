@@ -10,28 +10,30 @@ var range = 5; // in *type* +- vom letzten stable Wert !!! auf Messbereich der W
 var type = 'g'; // [g, %]
 
 eventHandler.subscribe('serial', function (data) {
+    var weight = data.weight;
+
     // TODO weg sobald aus der DB geladen wird
     if (stable == null) {
-        stable = data;
+        stable = 0;
     }
 
     if (last == null) {
-        last = data;
+        last = weight;
     }
 
     if (!timer) {
-        setTimer(data);
+        setTimer(weight);
     }
 
-    if (last !== data) {
+    if (last === weight) {
         clearTimeout(timer);
         timer = null;
     }
 
-    last = data;
+    last = weight;
 });
 
-function setTimer(data) {
+function setTimer(weight) {
     timer = setTimeout(function () {
         var lower = 0;
         var upper = 0;
@@ -54,9 +56,9 @@ function setTimer(data) {
                 break;
         }
 
-        if (data <= lower || upper <= data) {
-            stable = data;
-            eventHandler.publish('weight', data);
+        if (weight <= lower || upper <= weight) {
+            stable = weight;
+            eventHandler.publish('weight', weight);
         }
     }, time);
 }

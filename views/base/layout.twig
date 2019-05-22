@@ -40,10 +40,10 @@
 {#                    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i#}
 {#                                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>#}
                 </div>
+
                 {% block content %}
-
-
                 {% endblock %}
+
             </div>
         </div>
 
@@ -51,9 +51,6 @@
     </div>
 
 </div>
-
-{% block javascript %}
-{% endblock %}
 
 <!-- Bootstrap core JavaScript-->
 <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -64,12 +61,10 @@
 <!-- Custom scripts for all pages-->
 <script src="/javascripts/sbadmin/sb-admin-2.min.js"></script>
 
-<!-- Page level plugins -->
-<script src="/vendor/chart.js/Chart.min.js"></script>
-
-<!-- Page level custom scripts -->
-<script src="/javascripts/sbadmin/demo/chart-area-demo.js"></script>
-<script src="/javascripts/sbadmin/demo/chart-pie-demo.js"></script>
+<script type="text/javascript">
+{% block javascript %}
+{% endblock %}
+</script>
 
 </body>
 

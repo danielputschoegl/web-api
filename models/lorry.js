@@ -1,7 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
     const Lorry = sequelize.define('Lorry', {
-        weigth: {
+        weight: {
             type: DataTypes.FLOAT,
             allowNull: true,
         },

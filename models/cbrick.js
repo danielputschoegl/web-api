@@ -1,7 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
     const cBrick = sequelize.define('cBrick', {
-        cBrick_id: {
+        id: {
             type: DataTypes.BIGINT(10),
             allowNull: false,
             primaryKey: true
@@ -16,8 +16,8 @@ module.exports = (sequelize, DataTypes) => {
         },
     }, {});
     cBrick.associate = function (models) {
-        cBrick.belongsToMany(models.Process, {through: 'Process_CBrick'});
-        cBrick.belongsToMany(models.Part, {through: 'CBrick_Part'});
+        cBrick.belongsToMany(models.Process, {through: 'Process_cBrick'});
+        cBrick.belongsToMany(models.Part, {through: 'cBrick_Part'});
     };
     return cBrick;
 };

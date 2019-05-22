@@ -1,12 +1,12 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
     const Part = sequelize.define('Part', {
-        part_id: {
+        id: {
             type: DataTypes.BIGINT(10),
             allowNull: false,
             primaryKey: true
         },
-        system_weigth: {
+        system_weight: {
             type: DataTypes.FLOAT,
             allowNull: true,
         },
@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
         }
     }, {});
     Part.associate = function (models) {
-        Part.belongsToMany(models.cBrick, {through: 'CBrick_Part'});
+        Part.belongsToMany(models.cBrick, {through: 'cBrick_Part'});
         Part.hasOne(models.OrderScan);
     };
     return Part;

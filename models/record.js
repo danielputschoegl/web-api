@@ -1,7 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Record = sequelize.define('Record', {
-        weigth: {
+        weight: {
             type: DataTypes.FLOAT,
             allowNull: false,
         }
