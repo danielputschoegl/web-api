@@ -10,7 +10,6 @@ var dotenv = require('dotenv');
 dotenv.config();
 
 // Functions
-require('./functions/data-cleaner');
 require('./functions/data-action');
 
 var app = express();

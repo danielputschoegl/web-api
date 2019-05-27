@@ -5812,7 +5812,7 @@
       clearTimeout(context._timeout);
       context._hoverState = HoverState.SHOW;
 
-      if (!context.config.delay || !context.config.delay.show) {
+      if (!context.db.delay || !context.db.delay.show) {
         context.show();
         return;
       }
@@ -5821,7 +5821,7 @@
         if (context._hoverState === HoverState.SHOW) {
           context.show();
         }
-      }, context.config.delay.show);
+      }, context.db.delay.show);
     };
 
     _proto._leave = function _leave(event, context) {
@@ -5844,7 +5844,7 @@
       clearTimeout(context._timeout);
       context._hoverState = HoverState.OUT;
 
-      if (!context.config.delay || !context.config.delay.hide) {
+      if (!context.db.delay || !context.db.delay.hide) {
         context.hide();
         return;
       }
@@ -5853,7 +5853,7 @@
         if (context._hoverState === HoverState.OUT) {
           context.hide();
         }
-      }, context.config.delay.hide);
+      }, context.db.delay.hide);
     };
 
     _proto._isWithActiveTrigger = function _isWithActiveTrigger() {

@@ -290,26 +290,26 @@ var chart = new Chart(ctx, {
     }
 });
 
-function setWeight(weight) {
-    console.log('tset');
-
-    chart.data.labels.push(new Date().toTimeString().split(' ')[0]);
-    chart.data.datasets.forEach(function (dataset) {
-        dataset.data.push(weight);
-    });
-
-    if (chart.data.labels.length > 10) {
-        chart.data.labels.shift();
-        chart.data.datasets.forEach(function (dataset) {
-            dataset.data.shift();
-        });
-    }
-
-    chart.update();
-}
-
-$(document).ready(function () {
-    var socket = io();
-    socket.on('weight', setWeight);
-});
+// function setWeight(weight) {
+//     console.log('tset');
+//
+//     chart.data.labels.push(new Date().toTimeString().split(' ')[0]);
+//     chart.data.datasets.forEach(function (dataset) {
+//         dataset.data.push(weight);
+//     });
+//
+//     if (chart.data.labels.length > 10) {
+//         chart.data.labels.shift();
+//         chart.data.datasets.forEach(function (dataset) {
+//             dataset.data.shift();
+//         });
+//     }
+//
+//     chart.update();
+// }
+//
+// $(document).ready(function () {
+//     var socket = io();
+//     socket.on('weight', setWeight);
+// });
 {% endblock %}

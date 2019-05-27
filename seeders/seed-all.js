@@ -340,6 +340,13 @@ module.exports = {
             {nr: 'O444444', name: 'Test Order 4', created_at: new Date(), updated_at: new Date()}
         ], {});
 
+        await queryInterface.bulkInsert('Lorry', [
+            {created_at: new Date(), updated_at: new Date()},
+            {created_at: new Date(), updated_at: new Date()},
+            {created_at: new Date(), updated_at: new Date()},
+            {created_at: new Date(), updated_at: new Date()}
+        ], {});
+
         await queryInterface.bulkInsert('Process_Order', [
             {order_nr: 'O111111', process_id: '16', created_at: new Date(), updated_at: new Date()},
             {order_nr: 'O111111', process_id: '17', created_at: new Date(), updated_at: new Date()},

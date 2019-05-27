@@ -7200,7 +7200,7 @@ var core_plugins = {
 
 		var plugins = [];
 		var descriptors = [];
-		var config = (chart && chart.config) || {};
+		var config = (chart && chart.db) || {};
 		var options = (config.options && config.options.plugins) || {};
 
 		this._plugins.concat(config.plugins || []).forEach(function(plugin) {
@@ -8390,10 +8390,10 @@ function updateConfig(chart) {
 
 	newOptions = mergeConfig(
 		core_defaults.global,
-		core_defaults[chart.config.type],
+		core_defaults[chart.db.type],
 		newOptions);
 
-	chart.options = chart.config.options = newOptions;
+	chart.options = chart.db.options = newOptions;
 	chart.ensureScalesHaveIDs();
 	chart.buildOrUpdateScales();
 
@@ -15242,7 +15242,7 @@ var moment = createCommonjsModule(function (module, exports) {
 
             if (localeFamilies[name]) {
                 localeFamilies[name].forEach(function (x) {
-                    defineLocale(x.name, x.config);
+                    defineLocale(x.name, x.db);
                 });
             }
 

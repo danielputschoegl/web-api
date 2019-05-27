@@ -50,6 +50,37 @@
 
     <div class="card shadow mb-4">
         <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Lorry erfassen</h6>
+        </div>
+        <div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        Nummer scannen/eingeben
+                    </div>
+                    <div class="col-md-8">
+                        <input type="text" value="1"
+                               id="lorry_barcode" {% if lorryId is not null %} disabled {% endif %}/>
+                        <div class="btn-group">
+                            <button class="btn btn-primary" id="addLorry">OK</button>
+                            {% if lorryId is not null %}
+                                <button class="btn btn-primary" id="removeLorry"><i
+                                            class="far fa-trash-alt text-white"></i></button>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <p id="actualLorry"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Auftrag erfassen</h6>
         </div>
         <div>
@@ -85,7 +116,7 @@
         </div>
         <div>
             <div class="card-body">
-                {% if lorryId is not null %}
+                {% if lorryId is not null and orderId is not null %}
                     <div class="row">
                         <div class="col-md-4">
                             Barcode scannen/eingeben
@@ -172,7 +203,31 @@
             });
 
             $('#removeOrder').on('click', function () {
-                $.get('http://localhost:3000/admin/lorry/clear/session', function (data) {
+                $.get('http://localhost:3000/admin/lorry/clear/order', function (data) {
+                    location.reload();
+                })
+            });
+
+            $('#addLorry').on('click', function () {
+                var barcode = $('#lorry_barcode').val();
+
+                $.ajax({
+                    type: 'POST',
+                    data: {"barcode": barcode},
+                    url: 'http://localhost:3000/admin/lorry/add/lorry',
+                    success: function (data) {
+                        $('#actualLorry').text(JSON.stringify(data));
+                        location.reload();
+                        reloadOrderScans();
+                    },
+                    error: function (data) {
+                        alert('nothing found');
+                    }
+                });
+            });
+
+            $('#removeLorry').on('click', function () {
+                $.get('http://localhost:3000/admin/lorry/clear/lorry', function (data) {
                     location.reload();
                 })
             });
