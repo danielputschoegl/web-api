@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
         }
     }, {});
     Part.associate = function (models) {
-        Part.belongsToMany(models.cBrick, {through: 'cBrick_Part'});
+        Part.hasMany(models.cBrick_Part);
         Part.hasOne(models.OrderScan);
     };
     return Part;

@@ -11,15 +11,15 @@
                 <tr>
                     <th>ID</th>
                     <th>Name</th>
-                    <th>Gewicht</th>
+{#                    <th>Gewicht</th>#}
                 </tr>
                 </thead>
                 <tbody>
                 {% for part in parts %}
                     <tr>
-                        <td>{{ part.part_id }}</td>
+                        <td>{{ part.id }}</td>
                         <td>{{ part.name }}</td>
-                        <td>{{ part.system_weight }}</td>
+{#                        <td>{{ part.system_weight }}</td>#}
                     </tr>
                 {% endfor %}
                 </tbody>

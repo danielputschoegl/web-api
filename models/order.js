@@ -10,9 +10,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        weight: {
-            type: DataTypes.FLOAT,
-            allowNull: true,
+        lorryClosingEntry: { // Lorry fertig geladen, alle Parts liegen drauf
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
         }
     }, {});
 

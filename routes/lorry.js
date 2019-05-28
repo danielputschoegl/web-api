@@ -48,20 +48,19 @@ router.post('/add/part', function (req, res, next) {
     models.Part.findByPk(barcode).then(function (part) {
         if (!part) {
             res.status(400).json('failed');
+            return;
         }
 
         models.Lorry.findByPk(req.session.actualLorry).then(function (lorry) {
-            models.OrderScan.create({LorryId: lorry.id, PartPartId: part.part_id}).then(OrderScan => {
+            models.OrderScan.create({LorryId: lorry.id, PartId: part.dataValues.id}).then(OrderScan => {
                 if (!OrderScan) {
                     res.status(400).json('failed');
                 }
 
                 event = eventHandler.subscribe('weight', function (data) {
-                    console.log(data);
-
-                    if (data.lorryId === lorry.id) {
-                        OrderScan.update({
-                            weight: data.weightChange
+                    if (parseInt(data.lorryId) === parseInt(lorry.id)) {
+                        OrderScan.weight = data.weightChange;
+                        OrderScan.save().then(() => {
                         });
 
                         res.status(200).json(part.dataValues);
@@ -80,25 +79,24 @@ router.post('/add/order', function (req, res, next) {
     models.Order.findByPk(barcode).then(function (order) {
         if (!order) {
             res.status(400).json('failed');
+            return;
         }
-
         req.session.actualOrder = order.nr;
 
         if (req.session.actualLorry) {
             models.Lorry.findByPk(req.session.actualLorry).then(function (lorry) {
-                if (!lorry.order_nr || force) {
-                    console.log('test1');
-                    models.Lorry.update({order_nr: req.session.actualOrder}, {where: {id: req.session.actualLorry}}).then((result) => {
-                        console.log(result);
+                if (!lorry.OrderNr || force) {
+                    lorry.OrderNr = req.session.actualOrder;
+                    lorry.save().then(() => {
                     });
-                } else {
-                    if (lorry.order_nr !== req.session.actualOrder) {
-                        res.status(409).json('Ein anderer Auftrag liegt bereits auf diesem Kommissionierwagen!');
-                    }
                 }
 
-                res.status(200).json(order.dataValues);
-            })
+                if (lorry.OrderNr !== req.session.actualOrder) {
+                    res.status(409).json('Ein anderer Auftrag liegt bereits auf diesem Kommissionierwagen!');
+                } else {
+                    res.status(200).json(order.dataValues);
+                }
+            });
         } else {
             res.status(200).json(order.dataValues);
         }
@@ -117,23 +115,23 @@ router.post('/add/lorry', function (req, res, next) {
     models.Lorry.findByPk(barcode).then(function (lorry) {
         if (!lorry) {
             res.status(400).json('failed');
+            return;
         }
 
         req.session.actualLorry = lorry.id;
 
         if (req.session.actualOrder) {
-            if (!lorry.order_nr || force) {
-                console.log('test2');
-                lorry.update({
-                    order_nr: req.session.actualOrder
+            if (!lorry.OrderNr || force) {
+                lorry.OrderNr = req.session.actualOrder;
+                lorry.save().then(() => {
                 });
-            } else {
-                if (lorry.order_nr !== req.session.actualOrder) {
-                    res.status(409).json('Ein anderer Auftrag liegt bereits auf diesem Kommissionierwagen!');
-                }
             }
 
-            res.status(200).json(lorry.dataValues);
+            if (lorry.OrderNr !== req.session.actualOrder) {
+                res.status(409).json('Ein anderer Auftrag liegt bereits auf diesem Kommissionierwagen!');
+            } else {
+                res.status(200).json(order.dataValues);
+            }
         } else {
             res.status(200).json(lorry.dataValues);
         }

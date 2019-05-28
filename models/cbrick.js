@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
     }, {});
     cBrick.associate = function (models) {
         cBrick.belongsToMany(models.Process, {through: 'Process_cBrick'});
-        cBrick.belongsToMany(models.Part, {through: 'cBrick_Part'});
+        cBrick.hasMany(models.cBrick_Part);
     };
     return cBrick;
 };
