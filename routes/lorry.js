@@ -51,17 +51,36 @@ router.post('/add/part', function (req, res, next) {
 
     models.Part.findByPk(barcode).then(function (part) {
         if (!part) {
-            res.status(400).json('failed');
+            res.status(400).json({
+                status: 400,
+                error: {
+                    message: 'Teil nicht gefunden!'
+                }
+            });
+
             return;
         }
 
         models.Order.findByPk(req.session.actualOrder).then(function (order) {
-            console.log(order.nr);
-            console.log(part.id);
+            if (order.lorryClosingEntry) {
+                res.status(406).json({
+                    status: 406,
+                    error: {
+                        message: 'Der Auftrag wurde bereits abgeschlossen!'
+                    }
+                });
+
+                return;
+            }
 
             models.OrderScan.create({OrderNr: order.nr, PartId: part.id}).then(OrderScan => {
                 if (!OrderScan) {
-                    res.status(400).json('failed');
+                    res.status(400).json({
+                        status: 400,
+                        error: {
+                            message: 'Fehler!'
+                        }
+                    });
                 }
 
                 event = eventHandler.subscribe('weight', function (data) {
@@ -85,7 +104,13 @@ router.post('/add/order', function (req, res, next) {
 
     models.Order.findByPk(barcode).then(function (order) {
         if (!order) {
-            res.status(400).json('failed');
+            res.status(400).json({
+                status: 400,
+                error: {
+                    message: 'Auftrag nicht gefunden!'
+                }
+            });
+
             return;
         }
         req.session.actualOrder = order.nr;
@@ -99,7 +124,12 @@ router.post('/add/order', function (req, res, next) {
                 }
 
                 if (lorry.OrderNr !== req.session.actualOrder) {
-                    res.status(409).json('Ein anderer Auftrag liegt bereits auf diesem Kommissionierwagen!');
+                    res.status(409).json({
+                        status: 409,
+                        error: {
+                            message: 'Ein anderer Auftrag liegt bereits auf diesem Kommissionierwagen!'
+                        }
+                    });
                 } else {
                     res.status(200).json(order.dataValues);
                 }
@@ -121,7 +151,12 @@ router.post('/add/lorry', function (req, res, next) {
 
     models.Lorry.findByPk(barcode).then(function (lorry) {
         if (!lorry) {
-            res.status(400).json('failed');
+            res.status(400).json({
+                status: 400,
+                error: {
+                    message: 'Kommissionierwagen nicht gefunden!'
+                }
+            });
             return;
         }
 
@@ -135,7 +170,10 @@ router.post('/add/lorry', function (req, res, next) {
             }
 
             if (lorry.OrderNr !== req.session.actualOrder) {
-                res.status(409).json('Ein anderer Auftrag liegt bereits auf diesem Kommissionierwagen!');
+                res.status(409).json({
+                    status: 409,
+                    message: 'Ein anderer Auftrag liegt bereits auf diesem Kommissionierwagen!'
+                });
             } else {
                 res.status(200).json(order.dataValues);
             }
@@ -146,6 +184,11 @@ router.post('/add/lorry', function (req, res, next) {
 });
 
 router.get('/clear/lorry', function (req, res, next) {
+    req.session.actualLorry = null;
+    res.redirect('/');
+});
+
+router.get('/close/order', function (req, res, next) {
     req.session.actualLorry = null;
     res.redirect('/');
 });
