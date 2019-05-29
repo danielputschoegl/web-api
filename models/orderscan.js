@@ -7,8 +7,8 @@ module.exports = (sequelize, DataTypes) => {
         },
     }, {});
     OrderScan.associate = function (models) {
-      OrderScan.belongsTo(models.Lorry);
-      OrderScan.belongsTo(models.Part);
+        OrderScan.belongsTo(models.Order);
+        OrderScan.belongsTo(models.Part);
     };
     return OrderScan;
 };

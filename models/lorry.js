@@ -4,7 +4,6 @@ module.exports = (sequelize, DataTypes) => {
     }, {});
     Lorry.associate = function (models) {
         Lorry.belongsTo(models.Order);
-        Lorry.hasMany(models.OrderScan);
         Lorry.hasMany(models.Record)
     };
     return Lorry;

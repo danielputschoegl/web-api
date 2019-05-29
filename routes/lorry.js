@@ -24,15 +24,19 @@ router.get('/', function (req, res, next) {
 
 router.get('/get/parts', function (req, res, next) {
     if (req.session.actualLorry) {
-        models.Lorry.findByPk(
-            req.session.actualLorry,
+        models.Order.findByPk(
+            req.session.actualOrder,
             // {raw: true}
-        ).then(lorry => {
-            lorry.getOrderScans().then(OrderScans => {
-                res.render('admin/lorry/orderScans', {
-                    'orderScans': OrderScans
+        ).then(order => {
+            if (order) {
+                order.getOrderScans().then(OrderScans => {
+
+                    console.log(OrderScans);
+                    res.render('admin/lorry/orderScans', {
+                        'orderScans': OrderScans
+                    });
                 });
-            });
+            }
         });
     }
 });
@@ -51,14 +55,17 @@ router.post('/add/part', function (req, res, next) {
             return;
         }
 
-        models.Lorry.findByPk(req.session.actualLorry).then(function (lorry) {
-            models.OrderScan.create({LorryId: lorry.id, PartId: part.dataValues.id}).then(OrderScan => {
+        models.Order.findByPk(req.session.actualOrder).then(function (order) {
+            console.log(order.nr);
+            console.log(part.id);
+
+            models.OrderScan.create({OrderNr: order.nr, PartId: part.id}).then(OrderScan => {
                 if (!OrderScan) {
                     res.status(400).json('failed');
                 }
 
                 event = eventHandler.subscribe('weight', function (data) {
-                    if (parseInt(data.lorryId) === parseInt(lorry.id)) {
+                    if (parseInt(data.lorryId) === parseInt(req.session.actualLorry)) {
                         OrderScan.weight = data.weightChange;
                         OrderScan.save().then(() => {
                         });

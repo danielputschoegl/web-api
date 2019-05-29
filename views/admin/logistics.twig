@@ -124,6 +124,7 @@
                         <div class="col-md-8">
                             <input type="text" value="100594406" id="part_barcode"/>
                             <button class="btn btn-primary" id="addPart">OK</button>
+                            <i id="loadingSpinner" class="fas fa-spinner fa-pulse" style="display: none;"></i>
                         </div>
                     </div>
 
@@ -155,7 +156,7 @@
         $('#errorBox').hide();
         $(document).ready(function () {
 
-            $('#addPart').on('click', function () {
+            $(document).on('click', '#addPart', function () {
                 var barcode = $('#part_barcode').val();
 
                 if (barcode.length != 9) {
@@ -164,21 +165,23 @@
                     return;
                 }
 
-                $.ajax({
-                    type: 'POST',
-                    data: {"barcode": barcode},
-                    url: 'http://localhost:3000/admin/lorry/add/part',
-                    success: function (data) {
-                        // $('#actualPart').text(JSON.stringify(data));
+                var url = 'http://localhost:3000/admin/lorry/add/part';
+                var data = {"barcode": barcode};
+
+                $("#loadingSpinner").fadeIn();
+                $.post(url, data)
+                    .done(function (data) {
                         reloadOrderScans();
-                    },
-                    error: function (data) {
+                    })
+                    .fail(function (data) {
                         alert('nothing found');
-                    }
-                });
+                    })
+                    .always(function () {
+                        $("#loadingSpinner").fadeOut();
+                    });
             });
 
-            $('#addOrder').on('click', function () {
+            $(document).on('click', '#addOrder', function () {
                 var barcode = $('#order_barcode').val();
 
                 if (barcode.length != 7) {
@@ -203,13 +206,13 @@
                 });
             });
 
-            $('#removeOrder').on('click', function () {
+            $(document).on('click', '#removeOrder', function () {
                 $.get('http://localhost:3000/admin/lorry/clear/order', function (data) {
                     location.reload();
                 })
             });
 
-            $('#addLorry').on('click', function () {
+            $(document).on('click', '#addLorry', function () {
                 var barcode = $('#lorry_barcode').val();
 
                 $.ajax({
@@ -227,7 +230,7 @@
                 });
             });
 
-            $('#removeLorry').on('click', function () {
+            $(document).on('click', '#removeLorry', function () {
                 $.get('http://localhost:3000/admin/lorry/clear/lorry', function (data) {
                     location.reload();
                 })
@@ -237,6 +240,7 @@
 
             function reloadOrderScans() {
                 $.get('http://localhost:3000/admin/lorry/get/parts', function (data) {
+                    console.log(data);
                     $('#orderScans').html(data);
                 })
             }
