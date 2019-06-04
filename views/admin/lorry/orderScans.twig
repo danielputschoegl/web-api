@@ -1,11 +1,12 @@
 {% if orderScans|length > 0 %}
     <div class="table-responsive">
-        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <table class="table table-bordered" id="orderScanTable" width="100%" cellspacing="0">
             <thead>
             <tr>
                 <th>Part ID</th>
                 <th>Bezeichnung</th>
                 <th>Gewicht</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
@@ -14,6 +15,10 @@
                     <td>{{ scan.part.id }}</td>
                     <td>{{ scan.part.name }}</td>
                     <td>{{ scan.weight }}</td>
+                    <td>
+                        <a href="#" data-id="{{ scan.id }}" class="deleteOrderScan"><i
+                                    class="far fa-trash-alt text-danger"></i></a>
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>

@@ -5,6 +5,12 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.FLOAT,
             allowNull: true,
         },
+        onLorry: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: true
+        }
+
     }, {});
     OrderScan.associate = function (models) {
         OrderScan.belongsTo(models.Order);

@@ -2,9 +2,25 @@ var express = require('express');
 var router = express.Router();
 var models = require('../models');
 
-router.get('/', function (req, res, next) {
+router.get('/', async function (req, res, next) {
+    var orderId = null;
+    var lorryId = null;
+    var closingEntry = null;
+
+    if (req.session.actualLorry) {
+        lorryId = req.session.actualLorry;
+    }
+
+    if (req.session.actualOrder) {
+        orderId = req.session.actualOrder;
+
+        await models.Order.findByPk(orderId).then(order => {
+            closingEntry = order.lorryClosingEntry;
+        });
+    }
+
     res.render('admin/index', {
-        message: "Hello World"
+        'closingEntry': closingEntry,
     });
 });
 

@@ -121,10 +121,21 @@
                         <div class="col-md-4">
                             Barcode scannen/eingeben
                         </div>
-                        <div class="col-md-8">
-                            <input type="text" value="100594406" id="part_barcode"/>
+                        <div class="col-md-4">
+                            <input type="text" id="part_barcode" {{ closingEntry ? 'disabled' : '' }}/>
                             <button class="btn btn-primary" id="addPart">OK</button>
                             <i id="loadingSpinner" class="fas fa-spinner fa-pulse" style="display: none;"></i>
+                        </div>
+                        <div class="col-md-4 text-right">
+                            {% if not closingEntry %}
+                                <button class="btn btn-primary" id="closingEntry"><i class="fas fa-check mr-2"></i>
+                                    Kommissionierwagen abschließen
+                                </button>
+                            {% else %}
+                                <button class="btn btn-success" disabled><i class="fas fa-check mr-2"></i>
+                                    Kommissionierwagen abgeschlossen
+                                </button>
+                            {% endif %}
                         </div>
                     </div>
 
@@ -158,18 +169,13 @@
             $(document).on('click', '#addPart', function () {
                 var barcode = $('#part_barcode').val();
 
-                if (barcode.length != 9) {
-                    $('#error').html('Fehler! Barcode muss genau 9 Zeichen lang sein...');
-                    $('#errorBox').show();
-                    return;
-                }
-
                 var url = 'http://localhost:3000/admin/lorry/add/part';
                 var data = {"barcode": barcode};
 
                 $("#loadingSpinner").fadeIn();
                 $.post(url, data)
                     .done(function (data) {
+                        $('#part_barcode').val('');
                         reloadOrderScans();
                     })
                     .fail(function (data) {
@@ -239,10 +245,25 @@
 
             function reloadOrderScans() {
                 $.get('http://localhost:3000/admin/lorry/get/parts', function (data) {
-                    console.log(data);
                     $('#orderScans').html(data);
                 })
             }
+
+            $(document).on('click', '.deleteOrderScan', function () {
+                $.post({
+                    data: {"orderScanId": $(this).attr('data-id')},
+                    url: 'http://localhost:3000/admin/lorry/remove/part',
+                    success: function (data) {
+                        reloadOrderScans();
+                    },
+                });
+            });
+
+            $(document).on('click', '#closingEntry', function () {
+                $.post({
+                    url: 'http://localhost:3000/admin/lorry/close/entry'
+                });
+            })
         });
     </script>
 {% endblock %}

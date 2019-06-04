@@ -3,21 +3,27 @@ var router = express.Router();
 var models = require('../models');
 var eventHandler = require('../modules/event-handler');
 
-router.get('/', function (req, res, next) {
+router.get('/', async function (req, res, next) {
     var orderId = null;
     var lorryId = null;
-
-    if (req.session.actualOrder) {
-        orderId = req.session.actualOrder;
-    }
+    var closingEntry = null;
 
     if (req.session.actualLorry) {
         lorryId = req.session.actualLorry;
     }
 
+    if (req.session.actualOrder) {
+        orderId = req.session.actualOrder;
+
+        await models.Order.findByPk(orderId).then(order => {
+            closingEntry = order.lorryClosingEntry;
+        });
+    }
+
     res.render('admin/logistics', {
         'orderId': orderId,
         'lorryId': lorryId,
+        'closingEntry': closingEntry,
     });
 
 });
@@ -145,6 +151,18 @@ router.get('/clear/order', function (req, res, next) {
     res.redirect('/');
 });
 
+router.post('/remove/part', function (req, res, next) {
+    var orderScanId = req.body.orderScanId;
+
+    models.OrderScan.destroy({
+        where: {
+            id: orderScanId
+        }
+    }).then(function () {
+        res.status(200).json('success');
+    });
+});
+
 router.post('/add/lorry', function (req, res, next) {
     var barcode = req.body.barcode;
     var force = req.body.force;
@@ -172,7 +190,9 @@ router.post('/add/lorry', function (req, res, next) {
             if (lorry.OrderNr !== req.session.actualOrder) {
                 res.status(409).json({
                     status: 409,
-                    message: 'Ein anderer Auftrag liegt bereits auf diesem Kommissionierwagen!'
+                    error: {
+                        message: 'Ein anderer Auftrag liegt bereits auf diesem Kommissionierwagen!'
+                    }
                 });
             } else {
                 res.status(200).json(order.dataValues);
@@ -181,6 +201,34 @@ router.post('/add/lorry', function (req, res, next) {
             res.status(200).json(lorry.dataValues);
         }
     });
+});
+
+router.post('/close/entry', function (req, res, next) {
+    if (!req.session.actualOrder) {
+
+    }
+
+    console.log(req.session.actualOrder);
+
+    models.Order.findByPk(req.session.actualOrder).then(function (order) {
+        if (!order) {
+            res.status(400).json({
+                status: 400,
+                error: {
+                    message: 'Keine Bestellung hinterlegt!'
+                }
+            });
+
+            return;
+        }
+
+        order.lorryClosingEntry = true;
+        order.save().then(() => {
+            res.status(200).json('success');
+        });
+
+
+    })
 });
 
 router.get('/clear/lorry', function (req, res, next) {

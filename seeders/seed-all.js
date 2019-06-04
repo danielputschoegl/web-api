@@ -239,56 +239,28 @@ module.exports = {
         ], {});
 
         await queryInterface.bulkInsert('Part', [
-            {id: 100594406, name: 'Fahrantrieb MAG12', created_at: new Date(), updated_at: new Date()},
-            {id: 100802325, name: 'Antriebsrad Z=21 1404 CT', created_at: new Date(), updated_at: new Date()},
-            {
-                id: 100791929,
-                name: 'Gewindestift DIN913 M24x20-45H A2C 8.8',
-                created_at: new Date(),
-                updated_at: new Date()
-            },
-            {id: 100999728, name: 'Spannlager komplett', created_at: new Date(), updated_at: new Date()},
-            {id: 100054200, name: 'EW08LOMDA3C', created_at: new Date(), updated_at: new Date()},
-            {id: 100551501, name: 'EL08LOMD', created_at: new Date(), updated_at: new Date()},
-            {
-                id: 100919224,
-                name: 'VERLAENGERUNG GE08LR1/4EDOMD_L=40mm',
-                created_at: new Date(),
-                updated_at: new Date()
-            },
-            {id: 100549001, name: 'GE10LR1/4EDOMD', created_at: new Date(), updated_at: new Date()},
-            {id: 100437327, name: 'GE10LR1/4ED L=49 MM', created_at: new Date(), updated_at: new Date()},
-            {id: 100505708, name: 'ET10LOMD', created_at: new Date(), updated_at: new Date()},
-            {id: 100549201, name: 'GE12LREDOMDA3C', created_at: new Date(), updated_at: new Date()},
-            {id: 100551001, name: 'EW10LOMD', created_at: new Date(), updated_at: new Date()},
-            {id: 100090306, name: 'WEE8LROMDA3C', created_at: new Date(), updated_at: new Date()},
-            {id: 100553401, name: 'T08LA3CX', created_at: new Date(), updated_at: new Date()},
-            {
-                id: 100196924,
-                name: 'BG_Fahrwerk teleskop. kompl. (E12-02/52)',
-                created_at: new Date(),
-                updated_at: new Date()
-            },
-            {id: 100030026, name: 'Drehdurchführung 10-Kanal', created_at: new Date(), updated_at: new Date()},
-            {id: 100292223, name: 'Rueckschlagventil', created_at: new Date(), updated_at: new Date()},
-            {
-                id: 100683227,
-                name: 'SCHLAUCHGARN./Fahrwerk Standard E12-02',
-                created_at: new Date(),
-                updated_at: new Date()
-            },
-            {
-                id: 100683327,
-                name: 'SCHLAUCHGARN./Telefahrwerk E12-02,03',
-                created_at: new Date(),
-                updated_at: new Date()
-            },
-            {
-                id: 100688027,
-                name: 'SCHLAUCHGARN./Fahrw. Tele-VDS E12-02-03',
-                created_at: new Date(),
-                updated_at: new Date()
-            }
+            {id: '00014894600001L30', name: 'Entsperrbares Rueckschlagventil', created_at: new Date(), updated_at: new Date()},
+            {id: '00014894600002L30', name: 'RHZ35PLR',  created_at: new Date(), updated_at: new Date()},
+            {id: '00014894600003L30', name: 'Distanzblech', created_at: new Date(), updated_at: new Date()},
+            {id: '00014894600004L30', name: 'Pedal ZH innen', created_at: new Date(), updated_at: new Date()},
+            {id: '00014894600005L30', name: 'Kippschalter', created_at: new Date(), updated_at: new Date()},
+            {id: '00014894010001L30', name: 'Motorwinkel', created_at: new Date(), updated_at: new Date()},
+            {id: '00014894010002L30', name: 'Gelenklasche links bearbeitet', created_at: new Date(), updated_at: new Date()},
+            {id: '00014894010003L30', name: 'Rückschlagventil + Saugfilter', created_at: new Date(), updated_at: new Date()},
+            {id: '00014894010004L30', name: 'Motorwinkel', created_at: new Date(), updated_at: new Date()},
+            {id: '00014894010005L30', name: 'Klemmbügel 2', created_at: new Date(), updated_at: new Date()},
+            {id: '00014894010006L30', name: 'Luftduese', created_at: new Date(), updated_at: new Date()},
+            {id: '00014894010007L30', name: 'Rueckschlagventil', created_at: new Date(), updated_at: new Date()},
+            {id: '00014894010008L30', name: 'Jogdial Standard', created_at: new Date(), updated_at: new Date()},
+            {id: '00014894010009L30', name: 'Gaspedal 2701', created_at: new Date(), updated_at: new Date()},
+            {id: '00014894010010L30', name: 'HSWS Ventil', created_at: new Date(), updated_at: new Date()},
+            {id: '00014894010011L30', name: 'Gummi-Metall-Büchse', created_at: new Date(), updated_at: new Date()},
+            {id: '00014894010012L30', name: 'Scharnierwinkel', created_at: new Date(), updated_at: new Date()},
+            {id: '00014894010013L30', name: 'Schalter mit Sperre', created_at: new Date(), updated_at: new Date()},
+            {id: '00014894010014L30', name: 'Motorwinkel', created_at: new Date(), updated_at: new Date()},
+            {id: '00014894010015L30', name: 'Hydrolager V1500', created_at: new Date(), updated_at: new Date()},
+            {id: '00014894010016L30', name: 'Winkelgelenk AS13', created_at: new Date(), updated_at: new Date()},
+            {id: '00014894010017L30', name: 'Motorwinkel Pumpe', created_at: new Date(), updated_at: new Date()},
         ], {});
 
         await queryInterface.bulkInsert('Process_cBrick', [
@@ -367,27 +339,160 @@ module.exports = {
         ], {});
 
         await queryInterface.bulkInsert('cBrick_Part', [
-            {part_id: 100054200, c_brick_id: 100000943, created_at: new Date(), updated_at: new Date(), sequence: 1},
-            {part_id: 100030026, c_brick_id: 100000943, created_at: new Date(), updated_at: new Date(), sequence: 2},
-            {part_id: 100090306, c_brick_id: 100000943, created_at: new Date(), updated_at: new Date(), sequence: 3},
-            {part_id: 100437327, c_brick_id: 100000943, created_at: new Date(), updated_at: new Date(), sequence: 4},
-            {part_id: 100549001, c_brick_id: 100000943, created_at: new Date(), updated_at: new Date(), sequence: 5},
-            {part_id: 100549201, c_brick_id: 100000943, created_at: new Date(), updated_at: new Date(), sequence: 6},
-            {part_id: 100551501, c_brick_id: 100000943, created_at: new Date(), updated_at: new Date(), sequence: 7},
-            {part_id: 100919224, c_brick_id: 100000943, created_at: new Date(), updated_at: new Date(), sequence: 8},
-            {part_id: 100683227, c_brick_id: 100000949, created_at: new Date(), updated_at: new Date(), sequence: 9},
-            {part_id: 100683327, c_brick_id: 100000949, created_at: new Date(), updated_at: new Date(), sequence: 10},
-            {part_id: 100688027, c_brick_id: 100000949, created_at: new Date(), updated_at: new Date(), sequence: 11},
-            {part_id: 100553401, c_brick_id: 100000952, created_at: new Date(), updated_at: new Date(), sequence: 12},
-            {part_id: 100292223, c_brick_id: 100000959, created_at: new Date(), updated_at: new Date(), sequence: 13},
-            {part_id: 100999728, c_brick_id: 100000959, created_at: new Date(), updated_at: new Date(), sequence: 14},
-            {part_id: 100505708, c_brick_id: 100000965, created_at: new Date(), updated_at: new Date(), sequence: 15},
-            {part_id: 100551001, c_brick_id: 100000965, created_at: new Date(), updated_at: new Date(), sequence: 16},
-            {part_id: 100054200, c_brick_id: 100001007, created_at: new Date(), updated_at: new Date(), sequence: 17},
-            {part_id: 100802325, c_brick_id: 100001114, created_at: new Date(), updated_at: new Date(), sequence: 18},
-            {part_id: 100594406, c_brick_id: 100001116, created_at: new Date(), updated_at: new Date(), sequence: 19},
-            {part_id: 100791929, c_brick_id: 100001143, created_at: new Date(), updated_at: new Date(), sequence: 20},
-            {part_id: 100054200, c_brick_id: 100001181, created_at: new Date(), updated_at: new Date(), sequence: 21},
+            {
+                part_id: '00014894010016L30',
+                c_brick_id: 100000943,
+                created_at: new Date(),
+                updated_at: new Date(),
+                sequence: 1
+            },
+            {
+                part_id: '00014894010014L30',
+                c_brick_id: 100000943,
+                created_at: new Date(),
+                updated_at: new Date(),
+                sequence: 2
+            },
+            {
+                part_id: '00014894010002L30',
+                c_brick_id: 100000943,
+                created_at: new Date(),
+                updated_at: new Date(),
+                sequence: 3
+            },
+            {
+                part_id: '00014894600003L30',
+                c_brick_id: 100000943,
+                created_at: new Date(),
+                updated_at: new Date(),
+                sequence: 4
+            },
+            {
+                part_id: '00014894600005L30',
+                c_brick_id: 100000943,
+                created_at: new Date(),
+                updated_at: new Date(),
+                sequence: 5
+            },
+            {
+                part_id: '00014894010013L30',
+                c_brick_id: 100000943,
+                created_at: new Date(),
+                updated_at: new Date(),
+                sequence: 6
+            },
+            {
+                part_id: '00014894010008L30',
+                c_brick_id: 100000943,
+                created_at: new Date(),
+                updated_at: new Date(),
+                sequence: 7
+            },
+            {
+                part_id: '00014894010001L30',
+                c_brick_id: 100000943,
+                created_at: new Date(),
+                updated_at: new Date(),
+                sequence: 8
+            },
+            {
+                part_id: '00014894010010L30',
+                c_brick_id: 100000949,
+                created_at: new Date(),
+                updated_at: new Date(),
+                sequence: 9
+            },
+            {
+                part_id: '00014894010009L30',
+                c_brick_id: 100000949,
+                created_at: new Date(),
+                updated_at: new Date(),
+                sequence: 10
+            },
+            {
+                part_id: '00014894010015L30',
+                c_brick_id: 100000949,
+                created_at: new Date(),
+                updated_at: new Date(),
+                sequence: 11
+            },
+            {
+                part_id: '00014894010004L30',
+                c_brick_id: 100000952,
+                created_at: new Date(),
+                updated_at: new Date(),
+                sequence: 12
+            },
+            {
+                part_id: '00014894010005L30',
+                c_brick_id: 100000959,
+                created_at: new Date(),
+                updated_at: new Date(),
+                sequence: 13
+            },
+            {
+                part_id: '00014894010006L30',
+                c_brick_id: 100000959,
+                created_at: new Date(),
+                updated_at: new Date(),
+                sequence: 14
+            },
+            {
+                part_id: '00014894600002L30',
+                c_brick_id: 100000965,
+                created_at: new Date(),
+                updated_at: new Date(),
+                sequence: 15
+            },
+            {
+                part_id: '00014894010003L30',
+                c_brick_id: 100000965,
+                created_at: new Date(),
+                updated_at: new Date(),
+                sequence: 16
+            },
+            {
+                part_id: '00014894010007L30',
+                c_brick_id: 100001007,
+                created_at: new Date(),
+                updated_at: new Date(),
+                sequence: 17
+            },
+            {
+                part_id: '00014894600001L30',
+                c_brick_id: 100001114,
+                created_at: new Date(),
+                updated_at: new Date(),
+                sequence: 18
+            },
+            {
+                part_id: '00014894010012L30',
+                c_brick_id: 100001116,
+                created_at: new Date(),
+                updated_at: new Date(),
+                sequence: 19
+            },
+            {
+                part_id: '00014894010011L30',
+                c_brick_id: 100001143,
+                created_at: new Date(),
+                updated_at: new Date(),
+                sequence: 20
+            },
+            {
+                part_id: '00014894600004L30',
+                c_brick_id: 100001181,
+                created_at: new Date(),
+                updated_at: new Date(),
+                sequence: 21
+            },
+            {
+                part_id: '00014894010017L30',
+                c_brick_id: 100001181,
+                created_at: new Date(),
+                updated_at: new Date(),
+                sequence: 22
+            },
         ], {});
     },
     down: async (queryInterface, Sequelize) => {
