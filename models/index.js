@@ -8,7 +8,7 @@ const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.json')[env];
 const db = {};
 
-let sequelize = new Sequelize(config.database, config.username, config.password, config);
+global.sequelize = new Sequelize(config.database, config.username, config.password, config);
 
 // set force to false, if you don't want to drop all tables
 sequelize.sync({force: false})

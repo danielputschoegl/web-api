@@ -1,6 +1,8 @@
 - Reihenfolge ist egal, weil Gesamtfortschritt anhand der einzelnen Teile gemessen werden kann und der Fortschritt der selbe bleibt, egal wann das Teil wo hingschraubt wird.
 - Wenn der Lorry gefüllt wird, muss jedes Teil einzeln gescannt werden (auch wenn x mal das selbe Teil da ist). Ausnahme: alles wird gleichzeitig draufgelegt -> wird dann aber auch nur als ein Teil gescannt. CAVE: beim herunternehmen müssten ebenso alle auf einmal herunter genommen werden.
 - Es dürgen keine Gegenstände auf dem Kommissionierwagen abgelegt werden und Teile die runter sind sind runter und aus.
+- Toleranzspanne muss groß genug sein, da die Testwaage nur auf 5g genau misst
 
 - Vergleich Datenbank in Arbeit, Begründung warum MySQL: Lokale Instanz bereits gelaufen.
 - Warum Node: Vorteile von Node aufzählen
+- Am sichersten wäre es, den Lorry in der Reihenfolge zu beladen, in der er abgearbeitet wird und beim beladen gleich die Reihenfolge dazu zu speichern.

@@ -6,10 +6,10 @@ router.get('/', async function (req, res, next) {
     var orderId = null;
     var lorryId = null;
     var closingEntry = null;
-
-    if (req.session.actualLorry) {
-        lorryId = req.session.actualLorry;
-    }
+    var cntAllParts = 0;
+    var cntNotOnLorryParts = 0;
+    var onLorryProgress = 0;
+    var orderScans = null;
 
     if (req.session.actualOrder) {
         orderId = req.session.actualOrder;
@@ -19,8 +19,35 @@ router.get('/', async function (req, res, next) {
         });
     }
 
+    if (req.session.actualLorry && orderId) {
+        lorryId = req.session.actualLorry;
+
+        await models.OrderScan.findAndCountAll({
+            where: {
+                OrderNr: orderId
+            }
+        }).then(result => {
+            cntAllParts = result['count'];
+
+            orderScans = result['rows'];
+            for (let orderScan of orderScans) {
+                if (!orderScan.onLorry) {
+                    cntNotOnLorryParts++;
+                }
+            }
+
+            onLorryProgress = cntNotOnLorryParts / cntAllParts * 100;
+            console.log(result);
+        })
+    }
+
+
     res.render('admin/index', {
         'closingEntry': closingEntry,
+        'cntAllParts': cntAllParts,
+        'cntNotOnLorryParts': cntNotOnLorryParts,
+        'onLorryProgress': onLorryProgress.toFixed(2),
+        'orderScans' : orderScans
     });
 });
 

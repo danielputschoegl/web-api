@@ -165,6 +165,8 @@
     <script type="text/javascript">
         $('#errorBox').hide();
         $(document).ready(function () {
+            var socket = io();
+            socket.on('lorryUpdate', reloadOrderScans);
 
             $(document).on('click', '#addPart', function () {
                 var barcode = $('#part_barcode').val();
